@@ -332,8 +332,8 @@ class VariableLights(width: Int, height: Int) {
   var lights: Map[Coordinate, Int] = Map().withDefaultValue(0)
   val regex = """(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)""".r
 
-  def change(s: String) = regex.unapplySeq(s) match {
-    case Some(List(action, x1, y1, x2, y2)) =>
+  def change(s: String) = s match {
+    case regex(action, x1, y1, x2, y2) =>
       listCoordinates((x1.toInt, y1.toInt), (x2.toInt, y2.toInt)).foreach { c =>
         lights = lights.updated(c, newValue(lights(c), action))
       }
